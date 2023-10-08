@@ -1,0 +1,11 @@
+body {
+  background-color: #f7f7f7;
+  color: #303030;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
