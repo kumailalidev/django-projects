@@ -1,0 +1,38 @@
+<section>
+    <div>
+        <div>
+            <h1>Your Todos</h1>
+            <div>
+                <form action="" method="">
+                    <select name="" id="">
+                        <option value="" selected>Sort by</option>
+                        <option value="ascending">Ascending &#40;A-Z&#41;</option>
+                        <option value="descending">Descending &#40;Z-A&#41;</option>
+                        <option value="date_added">Date created</option>
+                        <option value="date_updated">Date updated</option>
+                    </select>
+                    <button type="submit">Sort</button>
+                </form>
+            </div>
+        </div>
+        {% for todo in todos %}
+            <div>
+                <ul>
+                    <li><a href="">&check;</a></li>
+                    <li>{{ todo.title }}</li>
+                    <li><em>Created at</em>: {{ todo.created_at }}</li>
+                    <li><em>Updated at</em>: {{ todo.updated_at }}</li>
+                </ul>
+                <div>
+                    <a href="">Update</a>
+                    <a href="">Delete</a>
+                </div>
+                <hr>
+            </div>
+        {% empty %}
+            <div>
+                <p>Your Todo list is empty.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
