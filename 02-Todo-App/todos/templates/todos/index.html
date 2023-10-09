@@ -9,11 +9,6 @@
         <div class="todo">
             <ul>
                 <li>{{ todo.title }}</li>
-                {% if todo.description %}
-                    <li>{{ todo.description }}</li>
-                {% else %}
-                    <li>Description not available</li>
-                {% endif %}
                 <li>{{todo.created_at}}</li>
                 <li>{{todo.updated_at}}</li>
             </ul>
