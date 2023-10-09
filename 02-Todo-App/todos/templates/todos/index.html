@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Django Todo Application</title>
+  </head>
+  <body>
+    <h1>Django Todo Application</h1>
+    <div class="todos">
+      {% for todo in todos %}
+        <div class="todo">
+            <ul>
+                <li>{{ todo.title }}</li>
+                {% if todo.description %}
+                    <li>{{todo.description}}</li>
+                {% else %}
+                    <li>Description not available</li>
+                {% endif %}
+                <li>{{todo.created_at}}</li>
+                <li>{{todo.updated_at}}</li>
+            </ul>
+        </div>
+        <hr />
+      {% empty %}
+        <div class="message">
+            <p>Todo list is empty! Please click on Create button to add a todo.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
