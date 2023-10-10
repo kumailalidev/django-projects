@@ -6,11 +6,21 @@ from .models import Todo
 
 def home(request):
     """
-    home view function to display list of todo objects.
+    View to handle homepage and search functionality
     """
     todos = Todo.objects.all()
     incomplete_todos = todos.filter(completed=False).count()
 
+    # handle search functionality
+    if request.GET:
+        # get search parameter
+        search_title = request.GET.get("title")
+
+        # only filter todos if title is not empty
+        if search_title:
+            todos = todos.filter(title__icontains=search_title)
+
+    # context variable
     context = {
         "todos": todos,
         "incomplete_todos": incomplete_todos,
