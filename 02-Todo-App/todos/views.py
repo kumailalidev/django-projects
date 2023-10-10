@@ -11,14 +11,30 @@ def home(request):
     todos = Todo.objects.all()
     incomplete_todos = todos.filter(completed=False).count()
 
-    # handle search functionality
+    # handle search and sorting functionality
     if request.GET:
-        # get search parameter
+        # get search and sorting parameter
         search_title = request.GET.get("title")
+        sort_by = request.GET.get("sort_by")
 
-        # only filter todos if title is not empty
+        # dictionary to map sort_by values to field names for ordering
+        SORT_BY_MAPPING = {
+            "ascending": "title",
+            "descending": "-title",
+            "date_created": "-created_at",
+            "date_updated": "-updated_at",
+        }
+
+        # filter todos only if title is not empty
         if search_title:
             todos = todos.filter(title__icontains=search_title)
+
+        # sort todos
+        if sort_by in SORT_BY_MAPPING:
+            # get the corresponding field name for mapping
+            order_by_field = SORT_BY_MAPPING[sort_by]
+            # apply the ordering to the queryset
+            todos = todos.order_by(order_by_field)
 
     # context variable
     context = {
