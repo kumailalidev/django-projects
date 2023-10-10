@@ -1,6 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import Http404
 from django.shortcuts import redirect, render
-from django.urls import reverse
 
 from .models import Todo
 
@@ -24,7 +23,6 @@ def add_todo(request):
     """
     View to handle functionality of adding a todo
     """
-
     if request.POST:
         title = request.POST.get("title")
 
@@ -37,3 +35,15 @@ def add_todo(request):
     # if user try to access /add/
     else:
         return redirect("home")
+
+
+def delete_todo(request, id):
+    """
+    View to handle delete functionality of a todo.
+    """
+    try:
+        todo = Todo.objects.get(id=id)
+        todo.delete()
+        return redirect("home")
+    except Todo.DoesNotExist:
+        raise Http404("Todo object does not exists...")
