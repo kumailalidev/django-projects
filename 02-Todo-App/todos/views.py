@@ -28,6 +28,13 @@ def home(request):
         # filter todos only if title is not empty
         if search_title:
             todos = todos.filter(title__icontains=search_title)
+            context = {
+                "todos": todos,
+                "search_title": search_title,
+            }
+
+            # render search template
+            return render(request, "todos/search.html", context)
 
         # sort todos
         if sort_by in SORT_BY_MAPPING:

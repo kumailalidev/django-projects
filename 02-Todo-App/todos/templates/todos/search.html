@@ -1,0 +1,32 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <!-- Search Results -->
+    <section>
+        <div>
+            <div>
+                {% if todos %}
+                    <p>Search results for '{{ search_title }}'</p>
+                {% else %}
+                    <p>No results for '{{ search_title }}</p>
+                {% endif %}
+                <a href="{% url 'home' %}">View All</a>
+            </div>
+            {% for todo in todos %}
+                <div>
+                    <ul>
+                        <li><input type="checkbox" {% if todo.completed %}checked{% endif %}></li>
+                        <li>{{ todo.title }}</li>
+                        <li><em>Created at</em>: {{ todo.created_at }}</li>
+                        <li><em>Updated at</em>: {{ todo.updated_at }}</li>
+                    </ul>
+                    <div>
+                        <a href="{% url 'update_todo' todo.id %}">Update</a>
+                        <a href="{% url 'delete_todo' todo.id %}">Delete</a>
+                    </div>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
