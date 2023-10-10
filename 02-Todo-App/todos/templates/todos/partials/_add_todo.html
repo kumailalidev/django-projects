@@ -2,8 +2,10 @@
     <div>
         <div>
             <h2>Add a Todo</h2>
-            <form action="" method="">
-                <input type="text" placeholder="Add a todo...">
+            <form action="{% url 'add_todo' %}" method="post">
+                <input type="text" placeholder="Add a todo..." name="title" required>
+
+                {% csrf_token %}
                 <button type="submit">Add</button>
             </form>
         </div>

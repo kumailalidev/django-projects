@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from .models import Todo
 
@@ -16,3 +18,22 @@ def home(request):
     }
 
     return render(request, "todos/index.html", context)
+
+
+def add_todo(request):
+    """
+    View to handle functionality of adding a todo
+    """
+
+    if request.POST:
+        title = request.POST.get("title")
+
+        # Create todo object only if todo title is not empty
+        if title:
+            Todo.objects.create(title=title)
+            return redirect("home")
+        else:
+            return redirect("home")
+    # if user try to access /add/
+    else:
+        return redirect("home")
