@@ -18,17 +18,13 @@
         {% for todo in todos %}
             <div>
                 <ul>
-                    {% if todo.completed %}
-                        <li><a href="">&check;</a></li>
-                    {% else %}
-                        <li><a href="">&cross;</a></li>
-                    {% endif %}
+                    <li><input type="checkbox" {% if todo.completed %}checked{% endif %}></li>
                     <li>{{ todo.title }}</li>
                     <li><em>Created at</em>: {{ todo.created_at }}</li>
                     <li><em>Updated at</em>: {{ todo.updated_at }}</li>
                 </ul>
                 <div>
-                    <a href="">Update</a>
+                    <a href="{% url 'update_todo' todo.id %}">Update</a>
                     <a href="{% url 'delete_todo' todo.id %}">Delete</a>
                 </div>
                 <hr>

@@ -1,0 +1,18 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<section>
+    <div>
+        <h2>Update todo</h2>
+        <div>
+            <form action="" method="post">
+                <input type="checkbox" {% if todo.completed %}checked{% endif %} name="completed">
+                <input type="text" value="{{ todo.title }}" name="title">
+                
+                {% csrf_token %}
+                <button type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock content %}
