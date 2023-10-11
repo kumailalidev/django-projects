@@ -1,0 +1,107 @@
+{% extends './base.html' %}
+
+{% block title %}Add Employee{% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    {% include "./partials/_header.html" %}
+
+    <!-- Add Employee -->
+    <section>
+        <div>
+            <h2>Add an Employee</h1>
+        </div>
+        <div>
+            <h3>Basic Information</h2>
+            <form action="" method="">
+                <!-- First name -->
+                <div>
+                    <label for="first_name">First Name:</label required>
+                    <input type="text" name="first_name" id="first_name" required>
+                </div>
+                <!-- Middle name -->
+                <div>
+                    <label for="middle_name">Middle Name:</label>
+                    <input type="text" name="middle_name" id="middle_name">
+                </div>
+                <!-- Last name -->
+                <div>
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" name="last_name" id="last_name" required>
+                </div>
+                <!-- Age -->
+                <div>
+                    <label for="age">Age:</label>
+                    <input type="number" name="age" id="age" min="18" max="60" required>
+                </div>
+                <!-- Date of Birth -->
+                <div>
+                    <label for="date_of_birth">Date of Birth;</label>
+                    <input type="date" name="date_of_birth" id="date_of_birth" required>
+                </div>
+                <!-- Email -->
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <!-- Phone -->
+                <div>
+                    <label for="phone">Phone:</label>
+                    <input type="text" name="phone" id="phone" required>
+                </div>
+                <!-- Designation -->
+                <div>
+                    <label for="desiggnation">Designation:</label>
+                    <input type="text" name="designation" id="designation" required>
+                </div>
+
+                <!-- Education -->
+                <h3>Education</h2>
+                
+                <!-- Institute Name -->
+                <div>
+                    <label for="institute_name">Institute Name:</label>
+                    <input type="text" name="institute_name" id="institute_name" required>
+                </div>
+                <!-- Degree title -->
+                <div>
+                    <label for="degree_title">Degree Title:</label>
+                    <input type="text" name="degree_title" id="degree_title" required>
+                </div>
+                <!-- Field of Study -->
+                <div>
+                    <label for="field_of_study">Field of Study:</label>
+                    <input type="text" name="field_of_study" id="field_of_study" required>
+                </div>
+                <!-- Start Date -->
+                <div>
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" name="start_date" id="start_date" required>
+                </div>
+                <!-- End Date -->
+                <div>
+                    <label for="end_date">End Date:</label>
+                    <input type="text" name="end_date" id="end_date">
+                </div>
+                <!-- Grade -->
+                <div>
+                    <label for="grade">Grade:</label>
+                    <input type="text" name="grade" id="grade" required>
+                </div>
+                <!-- Description -->
+                <div>
+                    <label for="description">Description:</label>
+                    <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include "./partials/_footer.html" %}
+
+{% endblock content %}
