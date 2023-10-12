@@ -6,6 +6,28 @@
     <!-- Header -->
     {% include "./partials/_header.html" %}
 
+    <div class="filters">
+        <!-- Add button -->
+        <div>
+            <a href="{% url 'add_employee' %}" class="btn">Add Employee</a>
+        </div>
+        <!-- Filters -->
+        <div>
+            <form action="" method="">
+                <select name="" id="">
+                    <option value="" selected>SORT BY</option>
+                    <option value="name_asc">Name: (A-Z)</option>
+                    <option value="name_dsc">Name: (Z-A)</option>
+                    <option value="age_asc">Age: (Low to High)</option>
+                    <option value="age_dsc">Age: (High to Low)</option>
+                    <option value="dob_asc">Date of Birth (High to Low)</option>
+                    <option value="dob_dsc">Date of Birth (High to Low)</option>
+                </select>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Employee list -->
     {% include "./partials/_employee_list.html" %}
 
