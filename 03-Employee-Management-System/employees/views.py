@@ -16,6 +16,11 @@ def home(request):
         employees = [
             employee for employee in employees if search_text in str(employee).lower()
         ]
+        return render(
+            request,
+            "employees/search_results.html",
+            {"search_text": search_text, "employees": employees},
+        )
 
     return render(request, "employees/index.html", {"employees": employees})
 

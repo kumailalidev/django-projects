@@ -1,0 +1,13 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <div>
+        <div>
+            <p>Search results for <strong>{{search_text}}</strong></p>
+            <a href="{% url 'home' %}" class="btn">Home</a>
+        </div>
+        <div>
+            {% include "./partials/_employee_list.html" %}
+        </div>
+    </div>
+{% endblock content %}
