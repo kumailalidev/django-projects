@@ -14,7 +14,7 @@
         </div>
         <div>
             <h3>Basic Information</h2>
-            <form action="" method="">
+            <form action="{% url 'add_employee' %}" method="post">
                 <!-- First name -->
                 <div>
                     <label for="first_name">First Name:</label required>
@@ -48,7 +48,7 @@
                 <!-- Phone -->
                 <div>
                     <label for="phone">Phone:</label>
-                    <input type="text" name="phone" id="phone" required>
+                    <input type="text" name="phone" id="phone" maxlength="15" required>
                 </div>
                 <!-- Designation -->
                 <div>
@@ -82,7 +82,7 @@
                 <!-- End Date -->
                 <div>
                     <label for="end_date">End Date:</label>
-                    <input type="text" name="end_date" id="end_date">
+                    <input type="date" name="end_date" id="end_date">
                 </div>
                 <!-- Grade -->
                 <div>
@@ -96,6 +96,7 @@
                 </div>
 
                 <!-- Submit -->
+                {% csrf_token %}
                 <button type="submit">Submit</button>
             </form>
         </div>
