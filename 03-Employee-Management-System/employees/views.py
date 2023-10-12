@@ -5,6 +5,18 @@ from .models import Employee, Education
 
 def home(request):
     employees = Employee.objects.all()
+
+    # handle GET request
+    if request.GET:
+        # get search parameter
+        search_text = request.GET.get("search")
+
+        # filter employees by __str__ representation (inefficient)
+        # TODO: Update filtering using Q objects
+        employees = [
+            employee for employee in employees if search_text in str(employee).lower()
+        ]
+
     return render(request, "employees/index.html", {"employees": employees})
 
 
