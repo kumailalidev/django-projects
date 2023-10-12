@@ -9,6 +9,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Age</th>
+                        <th colspan="2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,6 +21,8 @@
                             <td>{{ employee.email }}</td>
                             <td>{{ employee.phone }}</td>
                             <td>{{ employee.age }}</td>
+                            <td><a href="" class="btn btn-green">Update</a></td>
+                            <td><a href="" class="btn btn-red">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
