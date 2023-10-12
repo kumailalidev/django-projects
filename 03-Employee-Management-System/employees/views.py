@@ -89,7 +89,7 @@ def add(request):
 
 
 def update_employee(request, id):
-    employee = Employee.objects.get(id=id)
+    employee = get_object_or_404(Employee, id=id)
 
     # if POST request is sent
     if request.method == "POST":  # or request.POST
@@ -109,7 +109,8 @@ def update_employee(request, id):
         # education
         # get the related education objects (can be multiple)
         # TODO: Fix Education model, remove ForeignKey and add OneToOne relationship
-        education = Education.objects.get(employee=employee)
+        # TODO: Update update_employee template to remove for loop for printing education details
+        education = get_object_or_404(Education, employee=employee)
         education.institute_name = request.POST.get("institute_name")
         education.degree_title = request.POST.get("degree_title")
         education.field_of_study = request.POST.get("field_of_study")
@@ -125,3 +126,10 @@ def update_employee(request, id):
         return redirect(reverse("employee_detail", args=[employee.id]))
 
     return render(request, "employees/update_employee.html", {"employee": employee})
+
+
+def delete_employee(request, id):
+    employee = get_object_or_404(Employee, id=id)
+    employee.delete()
+
+    return redirect("home")
