@@ -14,7 +14,8 @@
                 <tbody>
                     {% for employee in employees %}
                         <tr>
-                            <td>{{ employee.first_name }} {% if employee.middle_name %} {{ employee.middle_name }} {% endif %} {{ employee.last_name }}</td>
+                            <!-- <td>{{ employee.first_name }} {% if employee.middle_name %} {{ employee.middle_name }} {% endif %} {{ employee.last_name }}</td> -->
+                            <td><a href="{% url 'employee_detail' employee.id %}">{{ employee }}</a></td>
                             <td>{{ employee.designation }}</td>
                             <td>{{ employee.email }}</td>
                             <td>{{ employee.phone }}</td>

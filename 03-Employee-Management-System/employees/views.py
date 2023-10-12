@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 
 from .models import Employee, Education
 
@@ -60,3 +60,9 @@ def add(request):
         return redirect("home")
 
     return render(request, "employees/add_employee.html")
+
+
+def employee_detail(request, id):
+    employee = get_object_or_404(Employee, id=id)
+
+    return render(request, "employees/employee_detail.html", {"employee": employee})

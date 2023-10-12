@@ -1,0 +1,46 @@
+{% extends "./base.html" %}
+
+{% block title %}{{ employee }} details &ndash; Django Employee Management System{% endblock title %}
+
+    {% block content %}
+    <!-- Header -->
+    {% include "./partials/_header.html" %}
+
+    <!-- Employee detail -->
+    <div>
+        <div>
+            <h2>Basic Information</h2>
+            <div>
+                <ul>
+                    <li>First Name: {{ employee.first_name }}</li>
+                    <li>Middle Name: {{ employee.middle_name }}</li>
+                    <li>Last Name: {{ employee.last_name }}</li>
+                    <li>Age: {{ employee.age }}</li>
+                    <li>Date of Birth: {{ employee.date_of_birth }}</li>
+                    <li>Email: {{ employee.email }}</li>
+                    <li>Phone: {{ employee.phone }}</li>
+                    <li>Designation: {{ employee.designation }}</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h2>Education</h2>
+            <div>
+                {% for education in employee.educations.all %}
+                <ul>
+                    <li>Institute Name: {{ education.institute_name }}</li>
+                    <li>Degree Title: {{ education.degree_title }}</li>
+                    <li>Field of Study: {{ education.field_of_study }}</li>
+                    <li>Start Date: {{ education.start_date }}</li>
+                    <li>End Date: {{ education.end_date }}</li>
+                    <li>Grade: {{ education.grade }}</li>
+                    <li>Description: {{ education.description }}</li>
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    {% include "./partials/_footer.html" %}
+{% endblock %}
