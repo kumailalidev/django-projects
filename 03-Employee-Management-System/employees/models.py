@@ -13,7 +13,9 @@ class Employee(models.Model):
 
 
 class Education(models.Model):
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, related_name="educations"
+    )
     institute_name = models.CharField(max_length=250)
     degree_title = models.CharField(max_length=250)
     field_of_study = models.CharField(max_length=50)
