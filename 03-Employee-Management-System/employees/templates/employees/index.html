@@ -3,9 +3,8 @@
 {% block title %}Django Employee Management System{%endblock %}
 
 {% block content %}
-    <!-- Header -->
-    {% include "./partials/_header.html" %}
 
+    <!-- Filter bar -->
     <div class="filters">
         <!-- Add button -->
         <div>
@@ -30,7 +29,4 @@
 
     <!-- Employee list -->
     {% include "./partials/_employee_list.html" %}
-
-    <!-- Footer -->
-    {% include "./partials/_footer.html" %}
 {% endblock %}

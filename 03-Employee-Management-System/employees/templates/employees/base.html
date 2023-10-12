@@ -9,6 +9,13 @@
     <title>{% block title %}{% endblock title %}</title>
   </head>
   <body>
+    <!-- Header -->
+    {% include "./partials/_header.html" %}
+
+    <!-- Main content -->
     {% block content %} {% endblock %}
+
+    <!-- Footer -->
+    {% include "./partials/_footer.html" %}
   </body>
 </html>
