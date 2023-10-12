@@ -21,7 +21,7 @@
                             <td>{{ employee.email }}</td>
                             <td>{{ employee.phone }}</td>
                             <td>{{ employee.age }}</td>
-                            <td><a href="" class="btn btn-green">Update</a></td>
+                            <td><a href="{% url 'update_employee' employee.id %}" class="btn btn-green">Update</a></td>
                             <td><a href="" class="btn btn-red">Delete</a></td>
                         </tr>
                     {% endfor %}

@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
+from django.urls import reverse
 
 from .models import Employee, Education
 
@@ -25,10 +26,17 @@ def home(request):
     return render(request, "employees/index.html", {"employees": employees})
 
 
+def employee_detail(request, id):
+    employee = get_object_or_404(Employee, id=id)
+
+    return render(request, "employees/employee_detail.html", {"employee": employee})
+
+
 def add(request):
     # if POST request is sent
     if request.method == "POST":  # or request.POST
         # get URL parameters
+
         # basic info
         first_name = request.POST.get("first_name")
         middle_name = request.POST.get("middle_name")
@@ -38,6 +46,7 @@ def add(request):
         email = request.POST.get("email")
         phone = request.POST.get("phone")
         designation = request.POST.get("designation")
+
         # education
         institute_name = request.POST.get("institute_name")
         degree_title = request.POST.get("degree_title")
@@ -79,7 +88,40 @@ def add(request):
     return render(request, "employees/add_employee.html")
 
 
-def employee_detail(request, id):
-    employee = get_object_or_404(Employee, id=id)
+def update_employee(request, id):
+    employee = Employee.objects.get(id=id)
 
-    return render(request, "employees/employee_detail.html", {"employee": employee})
+    # if POST request is sent
+    if request.method == "POST":  # or request.POST
+        # get parameter values and assign to object fields
+
+        # basic info
+        employee.first_name = request.POST.get("first_name")
+        employee.middle_name = request.POST.get("middle_name")
+        employee.last_name = request.POST.get("last_name")
+        employee.age = request.POST.get("age")
+        employee.date_of_birth = request.POST.get("date_of_birth")
+        employee.email = request.POST.get("email")
+        employee.phone = request.POST.get("phone")
+        employee.designation = request.POST.get("designation")
+        employee.save()
+
+        # education
+        # get the related education objects (can be multiple)
+        # TODO: Fix Education model, remove ForeignKey and add OneToOne relationship
+        education = Education.objects.get(employee=employee)
+        education.institute_name = request.POST.get("institute_name")
+        education.degree_title = request.POST.get("degree_title")
+        education.field_of_study = request.POST.get("field_of_study")
+        education.start_date = request.POST.get("start_date")
+        education.end_date = (
+            request.POST.get("end_date") if request.POST.get("end_date") else None
+        )
+        education.grade = request.POST.get("grade")
+        education.description = request.POST.get("description")
+        education.save()
+
+        # redirect to employee details
+        return redirect(reverse("employee_detail", args=[employee.id]))
+
+    return render(request, "employees/update_employee.html", {"employee": employee})
