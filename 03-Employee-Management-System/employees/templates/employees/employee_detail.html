@@ -13,7 +13,7 @@
                     <li>Middle Name: {{ employee.middle_name }}</li>
                     <li>Last Name: {{ employee.last_name }}</li>
                     <li>Age: {{ employee.age }}</li>
-                    <li>Date of Birth: {{ employee.date_of_birth }}</li>
+                    <li>Gender: {{ employee.gender }}</li>
                     <li>Email: {{ employee.email }}</li>
                     <li>Phone: {{ employee.phone }}</li>
                     <li>Designation: {{ employee.designation }}</li>
@@ -23,17 +23,23 @@
         <div>
             <h2>Education</h2>
             <div>
-                {% for education in employee.educations.all %}
-                <ul>
-                    <li>Institute Name: {{ education.institute_name }}</li>
-                    <li>Degree Title: {{ education.degree_title }}</li>
-                    <li>Field of Study: {{ education.field_of_study }}</li>
-                    <li>Start Date: {{ education.start_date }}</li>
-                    <li>End Date: {{ education.end_date }}</li>
-                    <li>Grade: {{ education.grade }}</li>
-                    <li>Description: {{ education.description }}</li>
-                </ul>
-                {% endfor %}
+                {% if employee.education %}
+                 {% with education=employee.education %}
+                    <ul>
+                        <li>Institute Name: {{ education.institute_name }}</li>
+                        <li>Degree Title: {{ education.degree_title }}</li>
+                        <li>Field of Study: {{ education.field_of_study }}</li>
+                        <li>Start Date: {{ education.start_date }}</li>
+                        <li>End Date: {{ education.end_date }}</li>
+                        <li>Grade: {{ education.grade }}</li>
+                        <li>Description: {{ education.description }}</li>
+                    </ul>
+                 {% endwith %}
+                {% else %}
+                    <div>
+                        <p>No education information is present at the moment.</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -33,7 +33,7 @@ class Employee(models.Model):
     education = models.OneToOneField(
         Education,
         on_delete=models.SET_NULL,
-        related_name="education_details",
+        blank=True,  # sets required=False when creating employee object using Django Admin
         null=True,
     )
 
