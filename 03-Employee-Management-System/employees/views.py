@@ -80,20 +80,7 @@ def add(request):
         description = request.POST.get("description")
 
         # create employee object
-
-        # Create education and employee objects
-        education = Education(
-            institute_name=institute_name,
-            degree_title=degree_title,
-            field_of_study=field_of_study,
-            start_date=start_date,
-            end_date=end_date,
-            grade=grade,
-            description=description,
-        )
-        education.save()
-
-        employee = Employee.objects.create(
+        employee = Employee(
             first_name=first_name,
             middle_name=middle_name,
             last_name=last_name,
@@ -102,7 +89,15 @@ def add(request):
             email=email,
             phone=phone,
             designation=designation,
-            education=education,
+            education=Education.objects.create(
+                institute_name=institute_name,
+                degree_title=degree_title,
+                field_of_study=field_of_study,
+                start_date=start_date,
+                end_date=end_date,
+                grade=grade,
+                description=description,
+            ),
         )
         employee.save()
 
