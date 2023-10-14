@@ -59,59 +59,45 @@ def add(request):
     education_form = EducationForm()
     employee_form = EmployeeForm(initial={"gender": ""})
 
-    # if POST request is sent
-    if request.method == "POST":  # or request.POST
-        # get URL parameters
+    # handle POST request
+    if request.method == "POST":
+        # create a HTML form with POST data
+        employee_form = EmployeeForm(request.POST)
+        education_form = EducationForm(request.POST)
 
-        # basic info
-        first_name = request.POST.get("first_name")
-        middle_name = request.POST.get("middle_name")
-        last_name = request.POST.get("last_name")
-        age = request.POST.get("age")
-        gender = request.POST.get("gender")
-        email = request.POST.get("email")
-        phone = request.POST.get("phone")
-        designation = request.POST.get("designation")
+        # validate employee and education form and create data base object
+        if employee_form.is_valid() and education_form.is_valid():
+            employee = Employee(
+                first_name=employee_form.cleaned_data["first_name"],
+                middle_name=employee_form.cleaned_data["middle_name"],
+                last_name=employee_form.cleaned_data["last_name"],
+                age=employee_form.cleaned_data["age"],
+                gender=employee_form.cleaned_data["gender"],
+                email=employee_form.cleaned_data["email"],
+                phone=employee_form.cleaned_data["phone"],
+                designation=employee_form.cleaned_data["designation"],
+                education=Education.objects.create(
+                    institute_name=education_form.cleaned_data["institute_name"],
+                    degree_title=education_form.cleaned_data["degree_title"],
+                    field_of_study=education_form.cleaned_data["field_of_study"],
+                    start_date=education_form.cleaned_data["start_date"],
+                    end_date=education_form.cleaned_data["end_date"],
+                    grade=education_form.cleaned_data["grade"],
+                    description=education_form.cleaned_data["description"],
+                ),
+            )
+            employee.save()
 
-        # education
-        institute_name = request.POST.get("institute_name")
-        degree_title = request.POST.get("degree_title")
-        field_of_study = request.POST.get("field_of_study")
-        start_date = request.POST.get("start_date")
-        end_date = (
-            request.POST.get("end_date") if request.POST.get("end_date") else None
-        )
-        grade = request.POST.get("grade")
-        description = request.POST.get("description")
-
-        # create employee object
-        employee = Employee(
-            first_name=first_name,
-            middle_name=middle_name,
-            last_name=last_name,
-            age=age,
-            gender=gender,
-            email=email,
-            phone=phone,
-            designation=designation,
-            education=Education.objects.create(
-                institute_name=institute_name,
-                degree_title=degree_title,
-                field_of_study=field_of_study,
-                start_date=start_date,
-                end_date=end_date,
-                grade=grade,
-                description=description,
-            ),
-        )
-        employee.save()
-
-        return redirect("home")
+        # redirect to employee detail page
+        return redirect(reverse("employee_detail", args=[employee.id]))
 
     return render(
         request,
         "employees/add_employee.html",
-        {"education_form": education_form, "employee_form": employee_form},
+        {
+            "education_form": education_form,
+            "employee_form": employee_form,
+        },
     )
 
 
