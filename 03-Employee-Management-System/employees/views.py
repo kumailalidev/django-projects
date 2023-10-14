@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
 from .models import Employee, Education
+from .forms import EducationForm, EmployeeForm
 
 
 def home(request):
@@ -54,6 +55,10 @@ def employee_detail(request, id):
 
 
 def add(request):
+    # Create education form
+    education_form = EducationForm()
+    employee_form = EmployeeForm(initial={"gender": ""})
+
     # if POST request is sent
     if request.method == "POST":  # or request.POST
         # get URL parameters
@@ -103,7 +108,11 @@ def add(request):
 
         return redirect("home")
 
-    return render(request, "employees/add_employee.html")
+    return render(
+        request,
+        "employees/add_employee.html",
+        {"education_form": education_form, "employee_form": employee_form},
+    )
 
 
 def update_employee(request, id):
