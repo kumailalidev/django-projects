@@ -63,7 +63,7 @@ def add(request):
         middle_name = request.POST.get("middle_name")
         last_name = request.POST.get("last_name")
         age = request.POST.get("age")
-        date_of_birth = request.POST.get("date_of_birth")
+        gender = request.POST.get("gender")
         email = request.POST.get("email")
         phone = request.POST.get("phone")
         designation = request.POST.get("designation")
@@ -80,20 +80,9 @@ def add(request):
         description = request.POST.get("description")
 
         # create employee object
-        employee = Employee.objects.create(
-            first_name=first_name,
-            middle_name=middle_name,
-            last_name=last_name,
-            age=age,
-            date_of_birth=date_of_birth,
-            email=email,
-            phone=phone,
-            designation=designation,
-        )
 
-        # Create education object
+        # Create education and employee objects
         education = Education(
-            employee=employee,
             institute_name=institute_name,
             degree_title=degree_title,
             field_of_study=field_of_study,
@@ -103,6 +92,19 @@ def add(request):
             description=description,
         )
         education.save()
+
+        employee = Employee.objects.create(
+            first_name=first_name,
+            middle_name=middle_name,
+            last_name=last_name,
+            age=age,
+            gender=gender,
+            email=email,
+            phone=phone,
+            designation=designation,
+            education=education,
+        )
+        employee.save()
 
         return redirect("home")
 
@@ -114,24 +116,21 @@ def update_employee(request, id):
 
     # if POST request is sent
     if request.method == "POST":  # or request.POST
-        # get parameter values and assign to object fields
+        # get education object related to employee
+        education = Education.objects.get(id=employee.education.id)
 
-        # basic info
+        # update employee object fields
         employee.first_name = request.POST.get("first_name")
         employee.middle_name = request.POST.get("middle_name")
         employee.last_name = request.POST.get("last_name")
         employee.age = request.POST.get("age")
-        employee.date_of_birth = request.POST.get("date_of_birth")
+        employee.gender = request.POST.get("gender")
         employee.email = request.POST.get("email")
         employee.phone = request.POST.get("phone")
         employee.designation = request.POST.get("designation")
         employee.save()
 
-        # education
-        # get the related education objects (can be multiple)
-        # TODO: Fix Education model, remove ForeignKey and add OneToOne relationship
-        # TODO: Update update_employee template to remove for loop for printing education details
-        education = get_object_or_404(Education, employee=employee)
+        # update education object fields
         education.institute_name = request.POST.get("institute_name")
         education.degree_title = request.POST.get("degree_title")
         education.field_of_study = request.POST.get("field_of_study")
