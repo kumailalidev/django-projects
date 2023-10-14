@@ -12,16 +12,37 @@ def home(request):
         # get search parameter
         search_text = request.GET.get("search")
 
+        # get sorting parameter value
+        sort_by = request.GET.get("sort_by")
+        print(sort_by)
+
+        # mapping sorting parameters
+        SORT_BY_MAPPING = {
+            "name_asc": "first_name",
+            "name_dsc": "-first_name",
+            "age_asc": "age",
+            "age_dsc": "-age",
+            "dob_asc": "date_of_birth",
+            "dob_dsc": "-date_of_birth",
+        }
+
         # filter employees by __str__ representation (inefficient)
+        # TODO: Implement search functionality in separate view
         # TODO: Update filtering using Q objects
-        employees = [
-            employee for employee in employees if search_text in str(employee).lower()
-        ]
-        return render(
-            request,
-            "employees/search_results.html",
-            {"search_text": search_text, "employees": employees},
-        )
+        if search_text != "" and search_text is not None:
+            employees = [
+                employee
+                for employee in employees
+                if search_text in str(employee).lower()
+            ]
+            return render(
+                request,
+                "employees/search_results.html",
+                {"search_text": search_text, "employees": employees},
+            )
+
+        # sort queryset by sort_by value
+        employees = employees.order_by(SORT_BY_MAPPING[sort_by])
 
     return render(request, "employees/index.html", {"employees": employees})
 
