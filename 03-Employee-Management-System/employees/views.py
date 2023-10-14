@@ -10,9 +10,6 @@ def home(request):
 
     # handle GET request
     if request.GET:
-        # get search parameter
-        search_text = request.GET.get("search")
-
         # get sorting parameter value
         sort_by = request.GET.get("sort_by")
 
@@ -26,10 +23,25 @@ def home(request):
             "dob_dsc": "-date_of_birth",
         }
 
+        # sort queryset by sort_by value
+        if sort_by in SORT_BY_MAPPING:
+            employees = employees.order_by(SORT_BY_MAPPING[sort_by])
+
+    return render(request, "employees/index.html", {"employees": employees})
+
+
+def search(request):
+    if request.method == "GET":  # or request.GET
+        # get search URL parameter
+        search_text = request.GET.get("query")  # returns None if does not exists
+
         # filter employees by __str__ representation (inefficient)
-        # TODO: Implement search functionality in separate view
         # TODO: Update filtering using Q objects
         if search_text != "" and search_text is not None:
+            # get all the employees from database
+            employees = Employee.objects.all()
+
+            # filter employees
             employees = [
                 employee
                 for employee in employees
@@ -40,12 +52,10 @@ def home(request):
                 "employees/search_results.html",
                 {"search_text": search_text, "employees": employees},
             )
+        else:
+            return redirect("home")
 
-        # sort queryset by sort_by value
-        if sort_by in SORT_BY_MAPPING:
-            employees = employees.order_by(SORT_BY_MAPPING[sort_by])
-
-    return render(request, "employees/index.html", {"employees": employees})
+    return redirect("home")
 
 
 def employee_detail(request, id):
