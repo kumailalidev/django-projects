@@ -102,40 +102,75 @@ def add(request):
 
 
 def update_employee(request, id):
+    # get the employee object
     employee = get_object_or_404(Employee, id=id)
+
+    # dictionary for pre populating form with initial data.
+    initial_employee_data = {
+        # employee information
+        "first_name": employee.first_name,
+        "middle_name": employee.middle_name,
+        "last_name": employee.last_name,
+        "age": employee.age,
+        "gender": employee.gender,
+        "email": employee.email,
+        "phone": employee.phone,
+        "designation": employee.designation,
+    }
+    initial_education_data = {
+        # education information
+        "institute_name": employee.education.institute_name,
+        "degree_title": employee.education.degree_title,
+        "field_of_study": employee.education.field_of_study,
+        "start_date": employee.education.start_date,
+        "end_date": employee.education.end_date,
+        "grade": employee.education.grade,
+        "description": employee.education.description,
+    }
+    employee_form = EmployeeForm(initial=initial_employee_data)
+    education_form = EducationForm(initial_education_data)
 
     # if POST request is sent
     if request.method == "POST":  # or request.POST
-        # get education object related to employee
-        education = Education.objects.get(id=employee.education.id)
+        # create a HTML form with POST data
+        employee_form = EmployeeForm(request.POST)
+        education_form = EducationForm(request.POST)
 
-        # update employee object fields
-        employee.first_name = request.POST.get("first_name")
-        employee.middle_name = request.POST.get("middle_name")
-        employee.last_name = request.POST.get("last_name")
-        employee.age = request.POST.get("age")
-        employee.gender = request.POST.get("gender")
-        employee.email = request.POST.get("email")
-        employee.phone = request.POST.get("phone")
-        employee.designation = request.POST.get("designation")
-        employee.save()
+        # validate employee and education form and update the related database object
+        if employee_form.is_valid() and education_form.is_valid():
+            # update employee object fields
+            employee.first_name = employee_form.cleaned_data["first_name"]
+            employee.middle_name = employee_form.cleaned_data["middle_name"]
+            employee.last_name = employee_form.cleaned_data["last_name"]
+            employee.age = employee_form.cleaned_data["age"]
+            employee.gender = employee_form.cleaned_data["gender"]
+            employee.email = employee_form.cleaned_data["email"]
+            employee.phone = employee_form.cleaned_data["phone"]
+            employee.designation = employee_form.cleaned_data["designation"]
+            employee.save()
 
-        # update education object fields
-        education.institute_name = request.POST.get("institute_name")
-        education.degree_title = request.POST.get("degree_title")
-        education.field_of_study = request.POST.get("field_of_study")
-        education.start_date = request.POST.get("start_date")
-        education.end_date = (
-            request.POST.get("end_date") if request.POST.get("end_date") else None
-        )
-        education.grade = request.POST.get("grade")
-        education.description = request.POST.get("description")
-        education.save()
+            # get education object related to employee
+            education = Education.objects.get(id=employee.education.id)
 
-        # redirect to employee details
-        return redirect(reverse("employee_detail", args=[employee.id]))
+            # update education object fields
+            education.institute_name = education_form.cleaned_data["institute_name"]
+            education.degree_title = education_form.cleaned_data["degree_title"]
+            education.field_of_study = education_form.cleaned_data["field_of_study"]
+            education.start_date = education_form.cleaned_data["start_date"]
+            education.end_date = education_form.cleaned_data["end_date"]
+            education.grade = education_form.cleaned_data["grade"]
+            education.description = education_form.cleaned_data["description"]
+            education.save()
 
-    return render(request, "employees/update_employee.html", {"employee": employee})
+            # redirect to employee details
+            return redirect(reverse("employee_detail", args=[employee.id]))
+
+    context = {
+        "education_form": education_form,
+        "employee_form": employee_form,
+    }
+
+    return render(request, "employees/update_employee.html", context)
 
 
 def delete_employee(request, id):
