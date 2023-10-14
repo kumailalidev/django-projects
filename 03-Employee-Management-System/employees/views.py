@@ -14,7 +14,6 @@ def home(request):
 
         # get sorting parameter value
         sort_by = request.GET.get("sort_by")
-        print(sort_by)
 
         # mapping sorting parameters
         SORT_BY_MAPPING = {
@@ -42,7 +41,8 @@ def home(request):
             )
 
         # sort queryset by sort_by value
-        employees = employees.order_by(SORT_BY_MAPPING[sort_by])
+        if sort_by in SORT_BY_MAPPING:
+            employees = employees.order_by(SORT_BY_MAPPING[sort_by])
 
     return render(request, "employees/index.html", {"employees": employees})
 
