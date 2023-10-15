@@ -67,39 +67,30 @@ def employee_detail(request, id):
 def add(request):
     # Create education form
     education_form = EducationForm()
-    employee_form = EmployeeForm(initial={"gender": ""})
+    employee_form = EmployeeForm()
 
     # handle POST request
     if request.method == "POST":
-        # create a HTML form with POST data
+        # create a from instance from POST data.
         employee_form = EmployeeForm(request.POST)
         education_form = EducationForm(request.POST)
 
         # validate employee and education form and create data base object
         if employee_form.is_valid() and education_form.is_valid():
-            employee = Employee(
-                first_name=employee_form.cleaned_data["first_name"],
-                middle_name=employee_form.cleaned_data["middle_name"],
-                last_name=employee_form.cleaned_data["last_name"],
-                age=employee_form.cleaned_data["age"],
-                gender=employee_form.cleaned_data["gender"],
-                email=employee_form.cleaned_data["email"],
-                phone=employee_form.cleaned_data["phone"],
-                designation=employee_form.cleaned_data["designation"],
-                education=Education.objects.create(
-                    institute_name=education_form.cleaned_data["institute_name"],
-                    degree_title=education_form.cleaned_data["degree_title"],
-                    field_of_study=education_form.cleaned_data["field_of_study"],
-                    start_date=education_form.cleaned_data["start_date"],
-                    end_date=education_form.cleaned_data["end_date"],
-                    grade=education_form.cleaned_data["grade"],
-                    description=education_form.cleaned_data["description"],
-                ),
-            )
-            employee.save()
+            # Create an employee database object, but don't save
+            employee_obj = employee_form.save(commit=False)
+
+            # Create and save education database object
+            education_obj = education_form.save()
+
+            # Modify the education OneToOne field of an employee object
+            employee_obj.education = education_obj
+
+            # Save the updated database object
+            employee_obj.save()
 
         # redirect to employee detail page
-        return redirect(reverse("employee_detail", args=[employee.id]))
+        return redirect(reverse("employee_detail", args=[employee_obj.id]))
 
     return render(
         request,
