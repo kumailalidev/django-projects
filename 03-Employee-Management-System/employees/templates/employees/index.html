@@ -3,29 +3,30 @@
 {% block title %}Django Employee Management System{%endblock %}
 
 {% block content %}
-
-    <!-- Filter bar -->
-    <div class="filters">
-        <!-- Add button -->
-        <div>
-            <a href="{% url 'add_employee' %}" class="btn">Add Employee</a>
+    <!-- Sorting options -->
+    {% if employees %}
+        <div class="filters">
+            <!-- Add button -->
+            <div>
+                <a href="{% url 'add_employee' %}" class="btn">Add Employee</a>
+            </div>
+            <!-- Filters -->
+            <div>
+                <form action="" method="get">
+                    <select name="sort_by" id="">
+                        <option value="" selected>SORT BY</option>
+                        <option value="name_asc">Name: (A-Z)</option>
+                        <option value="name_dsc">Name: (Z-A)</option>
+                        <option value="age_asc">Age: (Low to High)</option>
+                        <option value="age_dsc">Age: (High to Low)</option>
+                        <option value="dob_asc">Date of Birth (High to Low)</option>
+                        <option value="dob_dsc">Date of Birth (High to Low)</option>
+                    </select>
+                    <button type="submit">SORT</button>
+                </form>
+            </div>
         </div>
-        <!-- Filters -->
-        <div>
-            <form action="" method="get">
-                <select name="sort_by" id="">
-                    <option value="" selected>SORT BY</option>
-                    <option value="name_asc">Name: (A-Z)</option>
-                    <option value="name_dsc">Name: (Z-A)</option>
-                    <option value="age_asc">Age: (Low to High)</option>
-                    <option value="age_dsc">Age: (High to Low)</option>
-                    <option value="dob_asc">Date of Birth (High to Low)</option>
-                    <option value="dob_dsc">Date of Birth (High to Low)</option>
-                </select>
-                <button type="submit">SORT</button>
-            </form>
-        </div>
-    </div>
+    {% endif %}
 
     <!-- Employee list -->
     {% include "./partials/_employee_list.html" %}
