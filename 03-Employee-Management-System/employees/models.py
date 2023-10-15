@@ -24,7 +24,7 @@ class Employee(models.Model):
     middle_name = models.CharField(blank=True, null=True, max_length=50)
     last_name = models.CharField(max_length=50)
     age = models.IntegerField()
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default="O")
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     email = models.EmailField()
     phone = models.CharField(max_length=15)
     designation = models.CharField(max_length=250)
