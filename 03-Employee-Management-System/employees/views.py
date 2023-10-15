@@ -106,62 +106,24 @@ def update_employee(request, id):
     # get the employee object
     employee = get_object_or_404(Employee, id=id)
 
-    # dictionary for pre populating form with initial data.
-    initial_employee_data = {
-        # employee information
-        "first_name": employee.first_name,
-        "middle_name": employee.middle_name,
-        "last_name": employee.last_name,
-        "age": employee.age,
-        "gender": employee.gender,
-        "email": employee.email,
-        "phone": employee.phone,
-        "designation": employee.designation,
-    }
-    initial_education_data = {
-        # education information
-        "institute_name": employee.education.institute_name,
-        "degree_title": employee.education.degree_title,
-        "field_of_study": employee.education.field_of_study,
-        "start_date": employee.education.start_date,
-        "end_date": employee.education.end_date,
-        "grade": employee.education.grade,
-        "description": employee.education.description,
-    }
-    employee_form = EmployeeForm(initial=initial_employee_data)
-    education_form = EducationForm(initial_education_data)
+    # Create a employee and education form instance with a prepopulated data
+    employee_form = EmployeeForm(instance=employee)
+    education_form = EducationForm(instance=employee.education)
 
     # if POST request is sent
-    if request.method == "POST":  # or request.POST
-        # create a HTML form with POST data
-        employee_form = EmployeeForm(request.POST)
-        education_form = EducationForm(request.POST)
+    if request.method == "POST":
+        # create a form instance with POST data
+        employee_form = EmployeeForm(request.POST, instance=employee)
+        education_form = EducationForm(request.POST, instance=employee.education)
 
         # validate employee and education form and update the related database object
         if employee_form.is_valid() and education_form.is_valid():
-            # update employee object fields
-            employee.first_name = employee_form.cleaned_data["first_name"]
-            employee.middle_name = employee_form.cleaned_data["middle_name"]
-            employee.last_name = employee_form.cleaned_data["last_name"]
-            employee.age = employee_form.cleaned_data["age"]
-            employee.gender = employee_form.cleaned_data["gender"]
-            employee.email = employee_form.cleaned_data["email"]
-            employee.phone = employee_form.cleaned_data["phone"]
-            employee.designation = employee_form.cleaned_data["designation"]
-            employee.save()
-
-            # get education object related to employee
-            education = Education.objects.get(id=employee.education.id)
-
-            # update education object fields
-            education.institute_name = education_form.cleaned_data["institute_name"]
-            education.degree_title = education_form.cleaned_data["degree_title"]
-            education.field_of_study = education_form.cleaned_data["field_of_study"]
-            education.start_date = education_form.cleaned_data["start_date"]
-            education.end_date = education_form.cleaned_data["end_date"]
-            education.grade = education_form.cleaned_data["grade"]
-            education.description = education_form.cleaned_data["description"]
-            education.save()
+            # Update the employee and education database instance
+            employee_form.save()
+            education_form.save()
+            # NOTE:
+            # save() method returns the updated instance by default and this behavior
+            # can be suppress by overriding the save method of ModelForm.
 
             # redirect to employee details
             return redirect(reverse("employee_detail", args=[employee.id]))
