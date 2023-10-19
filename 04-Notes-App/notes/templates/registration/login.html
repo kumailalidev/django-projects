@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Log in &ndash; Notes App{% endblock title %}
+
+{% block content %}
+    <div>
+        <!-- Log in form -->
+        <form action="" method="post" id="login-form">
+            {{ form.as_div }}
+            {% csrf_token %}
+            
+            <!-- Setting value of next context variable -->
+            <!-- Usage: /accounts/login?next=/ -->
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <!-- Submit button -->
+            <input type="submit" value="Log in" form="login-form">
+        </form>
+    </div>
+{% endblock content %}
