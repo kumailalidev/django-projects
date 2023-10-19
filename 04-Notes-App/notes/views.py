@@ -8,4 +8,4 @@ class HomeView(View):
 
     # handle GET request
     def get(self, request, *args, **kwargs):
-        return HttpResponse("Django Notes App")
+        return render(request, "index.html", {})
