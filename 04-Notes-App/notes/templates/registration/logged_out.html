@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} &ndash; Notes App{% endblock %}
+
+{% block content %}
+    <div>
+        <p>
+            You have been successfully logged out.
+            You can <a href="{% url 'login' %}">Log-in</a> again.
+        </p>
+    </div>
+{% endblock content %}
