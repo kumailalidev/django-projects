@@ -4,17 +4,41 @@
 
 {% block content %}
     <div>
-        <!-- Log in form -->
-        <form action="" method="post" id="login-form">
-            {{ form.as_div }}
+        {# if form contains any errors, display a message. #}
+        {% if form.errors %}
+            <div>
+                <p>Your username and password didn't match. Please try again.</p>
+            </div>
+        {% endif %}
+
+        {# handle redirection after successful login. #}
+        {% if next %}
+            {% if not user.is_authenticated %}
+                <p>Please login to see this page</p>
+            {% endif %}
+        {% endif %}
+        
+        <!-- Login form -->
+        <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             
-            <!-- Setting value of next context variable -->
-            <!-- Usage: /accounts/login?next=/ -->
-            <input type="hidden" name="next" value="{{ next }}">
+            <!-- username -->
+            <div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
 
-            <!-- Submit button -->
-            <input type="submit" value="Log in" form="login-form">
+            <!-- password -->
+            <div>
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+
+            <!-- submit -->
+            <input type="submit" value="Login">
+
+            <!-- next context variable -->
+            <input type="hidden" name="next" value="{{ next }}">
         </form>
     </div>
 {% endblock content %}
