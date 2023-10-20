@@ -3,42 +3,62 @@
 {% block title %}Log in &ndash; Notes App{% endblock title %}
 
 {% block content %}
+    <!-- horizontal line -->
+    <hr>
+
     <div>
-        {# if form contains any errors, display a message. #}
-        {% if form.errors %}
-            <div>
-                <p>Your username and password didn't match. Please try again.</p>
-            </div>
-        {% endif %}
-
-        {# handle redirection after successful login. #}
-        {% if next %}
-            {% if not user.is_authenticated %}
-                <p>Please login to see this page</p>
+        <div>
+            <h2>Log In</h2>
+        </div>
+        <div>
+            {# if form contains any errors, display a message. #}
+            {% if form.errors %}
+                <div>
+                    <p>Your username and password didn't match. Please try again.</p>
+                </div>
             {% endif %}
-        {% endif %}
-        
-        <!-- Login form -->
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
+    
+            {# handle redirection after successful login. #}
+            {% if next %}
+                {% if not user.is_authenticated %}
+                    <p>Please login to see this page</p>
+                {% endif %}
+            {% endif %}
+        </div>
             
-            <!-- username -->
-            <div>
-                {{ form.username.label_tag }}
-                {{ form.username }}
-            </div>
+        <!-- Login form -->
+        <div>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                
+                <!-- username -->
+                <div>
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+        
+                <!-- password -->
+                <div>
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </div>
+        
+                <!-- submit -->
+                <input type="submit" value="Login">
+        
+                <!-- next context variable -->
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+        </div>
 
-            <!-- password -->
-            <div>
-                {{ form.password.label_tag }}
-                {{ form.password }}
-            </div>
-
-            <!-- submit -->
-            <input type="submit" value="Login">
-
-            <!-- next context variable -->
-            <input type="hidden" name="next" value="{{ next }}">
-        </form>
+        <!-- change password and registration options -->
+        <div>
+            <h3>More options</h3>
+            <ul>
+                <li><a href="{% url 'password_change' %}">Change password</a></li>
+                <li><a href="">Reset password</a></li>
+                <li><a href="">Sign up</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock content %}
