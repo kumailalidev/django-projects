@@ -1,5 +1,4 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views import generic
@@ -12,6 +11,13 @@ class HomeView(View):
     # handle GET request
     def get(self, request, *args, **kwargs):
         return render(request, "index.html", {})
+
+    # override dispatch method to check whether user is logged in or not
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class UserRegistrationView(generic.CreateView):
