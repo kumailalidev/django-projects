@@ -131,3 +131,6 @@ LOGOUT_REDIRECT_URL = "login"
 # login and logout urls (for views using login_required decorator)
 LOGIN_URL = "login"
 LOGOUT_URL = "logout"
+
+# Django email backend
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
