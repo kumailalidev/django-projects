@@ -1,7 +1,7 @@
 <header>
     <h1>Django Notes App</h1>
     <ul>
-        <li><a href="">Home</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
         {% if request.user.is_authenticated %}
             <li>Welcome, <strong>{{ request.user.username }}</strong></li>
             <li><a href="{% url 'logout' %}">Log out</a></li>
