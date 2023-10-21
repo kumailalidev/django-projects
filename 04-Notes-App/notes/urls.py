@@ -14,7 +14,7 @@ urlpatterns = [
         name="password_change",
     ),
     path(
-        "accounts/password_change_done/",
+        "accounts/password_change/done/",
         auth_views.PasswordChangeDoneView.as_view(),
         name="password_change_done",
     ),
@@ -22,5 +22,15 @@ urlpatterns = [
         "accounts/password_reset/",
         auth_views.PasswordResetView.as_view(),
         name="password_reset",
+    ),
+    path(
+        "accounts/password_rest/done/",
+        auth_views.PasswordResetDoneView.as_view(),
+        name="password_reset_done",
+    ),
+    path(
+        "accounts/reset/<uidb64>/<token>/",
+        auth_views.PasswordResetConfirmView.as_view(),
+        name="password_reset_confirm",
     ),
 ]
