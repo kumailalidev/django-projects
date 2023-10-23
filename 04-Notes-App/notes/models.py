@@ -1,7 +1,23 @@
 from django.db import models
+from django.db.models.query import QuerySet
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user
+
+
+class PublishedManager(models.Manager):
+    """
+    Custom model manager, returns notes only with 'PUBLISHED' status
+    and not archived.
+    """
+
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .filter(status=Note.Status.PUBLISHED)
+            .filter(archived=False)
+        )
 
 
 class Tag(models.Model):
@@ -47,6 +63,10 @@ class Note(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    # model managers
+    objects = models.Manager()  # default
+    published = PublishedManager()
 
     # overriding save method to assign current logged in user automatically
     def save(self, *args, **kwargs):
