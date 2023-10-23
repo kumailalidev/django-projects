@@ -31,24 +31,26 @@
             <input type="submit" value="Save">
         </form>
     </div>
-
-    <!-- JavaScript for changing value of hidden input based on checkbox status -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkbox = document.getElementById("id_status_checkbox");
-            const hiddenInput = document.querySelector('input[name="{{ form.status.name }}"]');
-
-            // set default values
-            checkbox.checked = false
-            hiddenInput.value = "PB"
-
-            checkbox.addEventListener("change", function () {
-                if (checkbox.checked) {
-                    hiddenInput.value = "DF";
-                } else {
-                    hiddenInput.value = "PB";
-                }
-            });
-        });
-    </script>
 {% endblock content %}
+
+{% block JavaScript %}
+        <!-- JavaScript for changing value of hidden input based on checkbox status -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const checkbox = document.getElementById("id_status_checkbox");
+                const hiddenInput = document.querySelector('input[name="{{ form.status.name }}"]');
+
+                // set default values
+                checkbox.checked = false
+                hiddenInput.value = "PB"
+
+                checkbox.addEventListener("change", function () {
+                    if (checkbox.checked) {
+                        hiddenInput.value = "DF";
+                    } else {
+                        hiddenInput.value = "PB";
+                    }
+                });
+            });
+        </script>
+{% endblock %}
