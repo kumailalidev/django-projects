@@ -1,8 +1,7 @@
-from typing import Any
-from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import Note
@@ -51,3 +50,19 @@ class NoteCreateView(CreateView):
         form.instance.user = self.request.user
 
         return super().form_valid(form)
+
+
+class DraftsView(LoginRequiredMixin, TemplateView):
+    template_name = "drafts.html"
+
+    # set context data
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # get drafts
+        drafts = Note.objects.filter(user=self.request.user).filter(status="DF")
+
+        # create a context variable inside dictionary
+        context["drafts"] = drafts
+
+        return context
