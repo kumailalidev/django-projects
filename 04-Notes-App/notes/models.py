@@ -68,11 +68,5 @@ class Note(models.Model):
     objects = models.Manager()  # default
     published = PublishedManager()
 
-    # overriding save method to assign current logged in user automatically
-    def save(self, *args, **kwargs):
-        if self.user_id == None:
-            self.user = get_user(self)  # assign the current logged-in user
-        super(Note, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.title
