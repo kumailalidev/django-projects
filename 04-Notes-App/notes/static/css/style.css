@@ -1,3 +1,16 @@
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.selected {
+  list-style: none;
+}
+
+.selected a {
+  color: black;
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 6px;
+  border: 1px solid black;
+  border-radius: 12px;
+}

@@ -1,10 +1,10 @@
 <!-- navigation menu -->
 <div>
     <ul>
-        <li><a href="">Notes</a></li>
-        <li><a href="">Drafts</a></li>
-        <li><a href="">Archived</a></li>
-        <li><a href="">Tags</a></li>
+        <li {% if request.path == '/' %}class="selected"{% endif %}><a href="{% url 'home' %}">Notes</a></li>
+        <li {% if request.path == '/drafts/' %}class="selected"{% endif %}><a href="{% url 'drafts' %}">Drafts</a></li>
+        <li {% if request.path == '/archived/' %}class="selected"{% endif %}><a href="">Archived</a></li>
+        <li {% if request.path == '/tags/' %}class="selected"{% endif %}><a href="">Tags</a></li>
     </ul>
 </div>
 <hr>
