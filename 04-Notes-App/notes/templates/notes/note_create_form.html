@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Note &ndash; Notes App{% endblock title %}
+
+{% block content %}
+    <div>
+        <!-- Note form -->
+        <form method="post">
+            {% csrf_token %}
+            <!-- title -->
+            <div>
+                {{ form.title.label_tag }}
+                {{ form.title }}
+            </div>
+            <!-- body -->
+            <div>
+                {{ form.body.label_tag }}
+                {{ form.body }}
+            </div>
+            <!-- add to drafts -->
+            <div>
+                <!-- hidden input for status value with default value 'PB' -->
+                <input type="hidden" name="{{ form.status.name }}" id="{{ form.status.id_for_label }}">
+
+                <label for="id_status_checkbox">Add to Drafts:</label>
+                <!-- checkbox to modify value of hidden input -->
+                <input type="checkbox" name="status_checkbox" id="id_status_checkbox">
+            </div>
+            
+            <!-- Save/submit -->
+            <input type="submit" value="Save">
+        </form>
+    </div>
+
+    <!-- JavaScript for changing value of hidden input based on checkbox status -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkbox = document.getElementById("id_status_checkbox");
+            const hiddenInput = document.querySelector('input[name="{{ form.status.name }}"]');
+
+            // set default values
+            checkbox.checked = false
+            hiddenInput.value = "PB"
+
+            checkbox.addEventListener("change", function () {
+                if (checkbox.checked) {
+                    hiddenInput.value = "DF";
+                } else {
+                    hiddenInput.value = "PB";
+                }
+            });
+        });
+    </script>
+{% endblock content %}

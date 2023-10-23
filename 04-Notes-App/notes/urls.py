@@ -43,4 +43,9 @@ urlpatterns = [
         views.UserRegistrationView.as_view(),
         name="register",
     ),
+    path(
+        "note/create/",
+        views.NoteCreateView.as_view(),
+        name="create_note",
+    ),
 ]
