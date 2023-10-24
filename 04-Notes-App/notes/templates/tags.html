@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Tags &ndash; Notes App{% endblock title %}
+
+{% block content %}
+    <!-- horizontal line -->
+    <hr>
+        
+    <!-- sidebar -->
+    {% include 'partials/_sidebar.html' %}
+
+    <!-- tags -->
+    <div>
+        <div>
+            <h2>Tags</h2>
+            <a href="">Add Tags</a>
+            <hr>
+        </div>
+
+        {% for tag in tags %}
+            <div>
+                <a href="">{{ tag.name }}</a>
+            </div>
+        {% empty %}
+            <div>
+                <p>You currently don't have any tags.</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
