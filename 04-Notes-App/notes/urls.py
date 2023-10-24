@@ -8,6 +8,7 @@ urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     path("<int:note_id>/", views.HomeView.as_view(), name="home"),
     path("drafts/", views.DraftsView.as_view(), name="drafts"),
+    path("archive/", views.ArchiveView.as_view(), name="archive"),
     path("tags/", views.TagsView.as_view(), name="tags"),
     # Notes
     path(
