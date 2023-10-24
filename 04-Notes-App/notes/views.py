@@ -1,37 +1,43 @@
-from django.shortcuts import redirect
+from typing import Any
+from django import http
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
+from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import Note, Tag
 
 
-class HomeView(TemplateView):
+class HomeView(View):
+    """
+    Home view to handle get, post methods.
+    """
+
     template_name = "index.html"
 
-    # set context data
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        # published notes
-        notes = Note.published.filter(user=self.request.user)
-        # pinned notes
-        pinned_notes = notes.filter(pinned=True)
-
-        # set context
-        context["notes"] = notes
-        context["pinned_notes"] = pinned_notes
-
-        return context
-
-    # override dispatch method to check whether user is logged in or not
-    # NOTE: This can be achieved using LoginRequiredMix class as base class.
+    # overriding dispatch method to add authentication
     def dispatch(self, request, *args, **kwargs):
+        # check if user is logged in
         if not request.user.is_authenticated:
             return redirect("login")
-
         return super().dispatch(request, *args, **kwargs)
+
+    # get HTTP method
+    def get(self, request, *args, **kwargs):
+        # get notes from database
+        notes = Note.published.filter(user=request.user)
+        # filter pinned notes
+        pinned_notes = notes.filter(pinned=True)
+
+        # create context variable
+        context = {
+            "notes": notes,
+            "pinned_notes": pinned_notes,
+        }
+
+        return render(request, self.template_name, context)
 
 
 class UserRegistrationView(CreateView):
