@@ -1,5 +1,3 @@
-from typing import Any
-from django import http
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
@@ -28,9 +26,11 @@ class HomeView(View):
     # get HTTP method
     def get(self, request, *args, **kwargs):
         # get notes from database
-        notes = Note.published.filter(user=request.user)
+        all_notes = Note.published.filter(user=request.user)
+        # filter unpinned notes
+        notes = all_notes.filter(pinned=False)
         # filter pinned notes
-        pinned_notes = notes.filter(pinned=True)
+        pinned_notes = all_notes.filter(pinned=True)
 
         # create context variable
         context = {
