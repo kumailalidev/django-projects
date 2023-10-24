@@ -107,7 +107,7 @@ class ArchiveView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         # get archived
-        archives = Note.objects.filter(user=self.request.user).filter(archive=True)
+        archives = Note.objects.filter(user=self.request.user).filter(archived=True)
 
         # set context
         context["archives"] = archives
