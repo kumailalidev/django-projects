@@ -1,0 +1,21 @@
+<!-- Action bar -->
+<div>
+    <h4>Actions</h4>
+    <!-- pinning and archiving a note -->
+    <div>
+        <form action="" method="post">
+            <!-- pinning -->
+            <div>
+                <input type="submit" name="pinned" value="{% if note.pinned %}UNPIN{% else %}PIN{% endif %}">
+            </div>
+            <!-- archiving -->
+            <div>
+                <input type="submit" value="{% if note.archived %}UNARCHIVE{% else %}ARCHIVE{% endif %}">
+            </div>
+        </form>
+    </div>
+    <!-- delete note -->
+    <div>
+        <a href="">DELETE</a>
+    </div>
+</div>
