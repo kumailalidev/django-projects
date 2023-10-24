@@ -16,6 +16,11 @@ urlpatterns = [
         views.NoteCreateView.as_view(),
         name="create_note",
     ),
+    path(
+        "note/<int:pk>/delete/",
+        views.NoteDeleteView.as_view(),
+        name="delete_note",
+    ),
     # Login and Registration
     path("accounts/login/", auth_views.LoginView.as_view(), name="login"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
