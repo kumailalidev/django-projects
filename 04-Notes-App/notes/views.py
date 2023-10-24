@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import View, TemplateView, CreateView, DeleteView
+from django.views.generic import View, TemplateView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 
@@ -80,6 +80,13 @@ class NoteCreateView(CreateView):
         form.instance.user = self.request.user
 
         return super().form_valid(form)
+
+
+class NoteUpdateView(UpdateView):
+    template_name_suffix = "_update_form"  # default is "_form"
+    model = Note
+    fields = "__all__"
+    success_url = "/"
 
 
 class NoteDeleteView(DeleteView):

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Note &ndash; Notes App{% endblock title %}
+
+{% block content %}
+    <!-- horizontal line -->
+    <hr>
+    
+    <!-- sidebar -->
+    {%  include 'partials/_sidebar.html' %}
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_div }}
+        
+            <!-- update/submit -->
+            <input type="submit" value="Update">
+        </form>
+    </div>
+{% endblock %}
