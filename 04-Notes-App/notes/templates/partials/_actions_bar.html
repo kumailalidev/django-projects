@@ -4,6 +4,7 @@
     <!-- pinning and archiving a note -->
     <div>
         <form action="" method="post">
+            {% csrf_token %}
             <!-- pinning -->
             <div>
                 <button type="submit" value="pinned">{% if note.pinned %}Unpin{% else %}📌 Pin{% endif %}</button>
