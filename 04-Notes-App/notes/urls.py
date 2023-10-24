@@ -7,6 +7,14 @@ from . import views
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     path("drafts/", views.DraftsView.as_view(), name="drafts"),
+    path("tags/", views.TagsView.as_view(), name="tags"),
+    # Notes
+    path(
+        "note/create/",
+        views.NoteCreateView.as_view(),
+        name="create_note",
+    ),
+    # Login and Registration
     path("accounts/login/", auth_views.LoginView.as_view(), name="login"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path(
@@ -43,10 +51,5 @@ urlpatterns = [
         "accounts/register/",
         views.UserRegistrationView.as_view(),
         name="register",
-    ),
-    path(
-        "note/create/",
-        views.NoteCreateView.as_view(),
-        name="create_note",
     ),
 ]
