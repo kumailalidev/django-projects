@@ -3,8 +3,8 @@
     <ul>
         <li {% if request.path == '/' %}class="selected"{% endif %}><a href="{% url 'home' %}">Notes</a></li>
         <li {% if request.path == '/drafts/' %}class="selected"{% endif %}><a href="{% url 'drafts' %}">Drafts</a></li>
-        <li {% if request.path == '/archived/' %}class="selected"{% endif %}><a href="">Archived</a></li>
-        <li {% if request.path == '/tags/' %}class="selected"{% endif %}><a href="">Tags</a></li>
+        <li {% if request.path == '/archive/' %}class="selected"{% endif %}><a href="{% url 'archive' %}">Archived</a></li>
+        <li {% if request.path == '/tags/' %}class="selected"{% endif %}><a href="{% url 'tags' %}">Tags</a></li>
     </ul>
 </div>
 <hr>
