@@ -16,7 +16,12 @@ class HomeView(TemplateView):
 
         # published notes
         notes = Note.published.filter(user=self.request.user)
+        # pinned notes
+        pinned_notes = notes.filter(archived=True)
+
+        # set context
         context["notes"] = notes
+        context["pinned_notes"] = pinned_notes
 
         return context
 
@@ -62,7 +67,7 @@ class DraftsView(LoginRequiredMixin, TemplateView):
         # get drafts
         drafts = Note.objects.filter(user=self.request.user).filter(status="DF")
 
-        # create a context variable inside dictionary
+        # set context
         context["drafts"] = drafts
 
         return context

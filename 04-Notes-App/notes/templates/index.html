@@ -18,8 +18,49 @@
         </div>
         <hr>
 
-        <!-- content -->
+        <!-- pinned notes -->
         <div>
+            <div>
+                <h3>Pinned Notes</h3>
+                <hr>
+            </div>
+            <!-- pinned notes -->
+            {% for note in pinned_notes %}
+                <div>
+                    <h3>{{ note.title }}</h3>
+                    <p>{{ note.body }}</p>
+                    <ul>
+                        <li>
+                            Tags:
+                            <ul>
+                                {% for tag in note.tags.all %}
+                                    <li>{{ tag }}</li>
+                                {% empty %}
+                                    <li>No tags</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li>Status: {{ note.status }}</li>
+                        <li>Archived: {{ note.archived }}</li>
+                        <li>Created at: {{ note.created_at }}</li>
+                        <li>Updated at: {{ note.updated_at }}</li>
+                    </ul>
+                </div>
+                <hr>
+            {% empty %}
+                <div>
+                    <p>Your pinned notes will appear here.</p>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- notes -->
+        <div>
+            <div>
+                <h3>My Notes</h3>
+                <hr>
+            </div>
             {% for note in notes %}
             <div>
                 <h3>{{ note.title }}</h3>
