@@ -17,7 +17,7 @@ class HomeView(TemplateView):
         # published notes
         notes = Note.published.filter(user=self.request.user)
         # pinned notes
-        pinned_notes = notes.filter(archived=True)
+        pinned_notes = notes.filter(pinned=True)
 
         # set context
         context["notes"] = notes
