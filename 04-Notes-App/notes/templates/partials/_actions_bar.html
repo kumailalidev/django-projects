@@ -3,15 +3,15 @@
     <p><strong>Actions</strong></p>
     <!-- pinning and archiving a note -->
     <div>
-        <form action="" method="post">
+        <form action="{% url 'home' note.id %}" method="post">
             {% csrf_token %}
             <!-- pinning -->
             <div>
-                <button type="submit" value="pinned">{% if note.pinned %}Unpin{% else %}📌 Pin{% endif %}</button>
+                <button type="submit" name="pinned" value="pinned">{% if note.pinned %}Unpin{% else %}📌 Pin{% endif %}</button>
             </div>
             <!-- archiving -->
             <div>
-                <button type="submit" value="archived">{% if note.archived %}Unarchive{% else %}📦 Archive{% endif %}</button>
+                <button type="submit" name="archived" value="archived">{% if note.archived %}Unarchive{% else %}📦 Archive{% endif %}</button>
             </div>
         </form>
     </div>

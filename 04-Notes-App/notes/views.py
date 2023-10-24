@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Note, Tag
 
 
+# TODO: Improve or handle post request for action into separate view.
 class HomeView(View):
     """
     Home view to handle get, post methods.
@@ -38,6 +39,25 @@ class HomeView(View):
         }
 
         return render(request, self.template_name, context)
+
+    # post HTTP method
+    def post(self, request, note_id, *args, **kwargs):
+        # get note based on note id
+        note = Note.published.get(pk=note_id)
+
+        # get actions
+        actions = request.POST
+
+        # handle actions
+        if "pinned" in actions:
+            note.pinned = not note.pinned
+        if "archived" in actions:
+            note.archived = not note.archived
+
+        # save the object
+        note.save()
+
+        return redirect("home")
 
 
 class UserRegistrationView(CreateView):
