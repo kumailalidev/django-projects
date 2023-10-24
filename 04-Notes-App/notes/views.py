@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import Note
+from .models import Note, Tag
 
 
 class HomeView(TemplateView):
@@ -69,5 +69,21 @@ class DraftsView(LoginRequiredMixin, TemplateView):
 
         # set context
         context["drafts"] = drafts
+
+        return context
+
+
+class TagsView(LoginRequiredMixin, TemplateView):
+    template_name = "tags.html"
+
+    # set context data
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # get tags
+        tags = Tag.objects.all()
+
+        # set context
+        context["tags"] = tags
 
         return context
