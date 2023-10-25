@@ -7,7 +7,6 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Note, Tag
 
 
-# TODO: Improve or handle post request for action into separate view.
 class HomeView(View):
     """
     Home view to handle get, post methods.
@@ -42,14 +41,18 @@ class HomeView(View):
     # post HTTP method
     def post(self, request, note_id, *args, **kwargs):
         # get note based on note id
-        note = Note.published.get(pk=note_id)
+        note = Note.objects.get(pk=note_id)
 
         # get actions
         actions = request.POST
 
         # handle actions
         if "pinned" in actions:
+            # change the pinned status
             note.pinned = not note.pinned
+
+            # pinned notes cannot be archived
+            note.archived = False
         if "archived" in actions:
             note.archived = not note.archived
 
