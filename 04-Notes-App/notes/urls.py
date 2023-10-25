@@ -17,6 +17,7 @@ urlpatterns = [
     # Tags
     path("tag/create/", views.TagCreateView.as_view(), name="create_tag"),
     path("tag/<int:pk>/delete/", views.TagDeleteView.as_view(), name="delete_tag"),
+    path("tag/<int:pk>/update/", views.TagUpdateView.as_view(), name="update_tag"),
     # Login and Registration
     path("accounts/login/", auth_views.LoginView.as_view(), name="login"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),

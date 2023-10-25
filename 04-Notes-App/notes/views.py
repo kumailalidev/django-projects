@@ -180,7 +180,7 @@ class TagCreateView(View):
 
 class TagDeleteView(View):
     """
-    View for deleting a tag. Only HTTP POST method allowed.
+    View for deleting a tag. Only HTTP POST and GET method are allowed.
     """
 
     template_name = "notes/tag_confirm_delete.html"
@@ -211,3 +211,38 @@ class TagDeleteView(View):
     # handling HTTP POST method
     def post(self, request, pk):
         return self.delete(request, pk)
+
+
+class TagUpdateView(View):
+    """
+    View for updating tag. Only HTTP GET, POST and UPDATE methods are allowed.
+    """
+
+    template_name = "notes/tag_update_form.html"
+
+    # adding authentication
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, pk):
+        # get tag object
+        tag = get_object_or_404(Tag, pk=pk)
+
+        return render(request, self.template_name, {"tag": tag})
+
+    def post(self, request, pk):
+        # get tag object
+        tag = get_object_or_404(Tag, pk=pk)
+
+        # get updated tag name
+        name = request.POST.get("name")
+
+        if name:
+            # update the tag name
+            tag.name = name
+            tag.save()
+            return redirect("tags")
+
+        return render(request, self.template_name, {"tag": tag})

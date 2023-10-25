@@ -13,13 +13,13 @@
     <div>
         <div>
             <h2>Tags</h2>
-            <a href="">Add Tags</a>
+            <a href="{% url 'create_tag' %}">Add Tags</a>
             <hr>
         </div>
 
         {% for tag in tags %}
             <div>
-                <span>{{ tag.name }} <a href="{% url 'delete_tag' pk=tag.id %}">🗑️</a></span>
+                <span>#{{ tag.name }} <a href="{% url 'delete_tag' pk=tag.id %}">❌</a><a href="{% url 'update_tag' pk=tag.id %}">✏️</a></span>
             </div>
         {% empty %}
             <div>
