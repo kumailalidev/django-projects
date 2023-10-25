@@ -57,6 +57,9 @@ class HomeView(View):
         if "archived" in actions:
             note.archived = not note.archived
 
+            # archived notes cannot be pinned
+            note.pinned = False
+
         # save the object
         note.save()
 
