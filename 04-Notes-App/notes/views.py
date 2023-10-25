@@ -65,7 +65,7 @@ class UserRegistrationView(CreateView):
     success_url = reverse_lazy("login")
 
 
-class NoteCreateView(CreateView):
+class NoteCreateView(LoginRequiredMixin, CreateView):
     template_name_suffix = "_create_form"  # default is "_form"
     model = Note
     fields = [
@@ -82,14 +82,14 @@ class NoteCreateView(CreateView):
         return super().form_valid(form)
 
 
-class NoteUpdateView(UpdateView):
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
     template_name_suffix = "_update_form"  # default is "_form"
     model = Note
     fields = "__all__"
     success_url = "/"
 
 
-class NoteDeleteView(DeleteView):
+class NoteDeleteView(LoginRequiredMixin, DeleteView):
     # template_name = "note_confirm_delete" # default
     model = Note
     success_url = reverse_lazy("home")
