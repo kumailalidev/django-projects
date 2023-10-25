@@ -1,4 +1,5 @@
-from django.shortcuts import redirect, render
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView, CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -175,3 +176,38 @@ class TagCreateView(View):
             return redirect("tags")
 
         return render(request, self.template_name)
+
+
+class TagDeleteView(View):
+    """
+    View for deleting a tag. Only HTTP POST method allowed.
+    """
+
+    template_name = "notes/tag_confirm_delete.html"
+
+    # adding authentication
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+        return super().dispatch(request, *args, **kwargs)
+
+    # handling HTTP GET request
+    def get(self, request, pk):
+        # get tag object
+        tag = get_object_or_404(Tag, pk=pk)
+
+        return render(request, self.template_name, {"object": tag})
+
+    # HTTP delete method
+    def delete(self, request, pk):
+        # get tag object
+        tag = get_object_or_404(Tag, pk=pk)
+
+        # delete tag object
+        tag.delete()
+
+        return redirect("tags")
+
+    # handling HTTP POST method
+    def post(self, request, pk):
+        return self.delete(request, pk)

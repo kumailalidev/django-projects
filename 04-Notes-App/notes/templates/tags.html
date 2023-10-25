@@ -19,7 +19,7 @@
 
         {% for tag in tags %}
             <div>
-                <a href="">{{ tag.name }}</a>
+                <span>{{ tag.name }} <a href="{% url 'delete_tag' pk=tag.id %}">🗑️</a></span>
             </div>
         {% empty %}
             <div>
