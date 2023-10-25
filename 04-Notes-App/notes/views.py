@@ -144,3 +144,34 @@ class TagsView(LoginRequiredMixin, TemplateView):
         context["tags"] = tags
 
         return context
+
+
+class TagCreateView(View):
+    """
+    View for creating tag. Only HTTP POST method is allowed.
+    """
+
+    template_name = "notes/tag_create_form.html"
+
+    # adding authentication
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect("login")
+        return super().dispatch(request, *args, **kwargs)
+
+    # handling HTTP GET request
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+    # handling HTTP POST request
+    def post(self, request, *args, **kwargs):
+        # get the tag name
+        name = request.POST.get("name")
+
+        if name:
+            # create and save tag object into database
+            tag = Tag(name=name)
+            tag.save()
+            return redirect("tags")
+
+        return render(request, self.template_name)

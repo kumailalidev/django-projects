@@ -11,21 +11,11 @@ urlpatterns = [
     path("archive/", views.ArchiveView.as_view(), name="archive"),
     path("tags/", views.TagsView.as_view(), name="tags"),
     # Notes
-    path(
-        "note/create/",
-        views.NoteCreateView.as_view(),
-        name="create_note",
-    ),
-    path(
-        "note/<int:pk>/update/",
-        views.NoteUpdateView.as_view(),
-        name="update_note",
-    ),
-    path(
-        "note/<int:pk>/delete/",
-        views.NoteDeleteView.as_view(),
-        name="delete_note",
-    ),
+    path("note/create/", views.NoteCreateView.as_view(), name="create_note"),
+    path("note/<int:pk>/update/", views.NoteUpdateView.as_view(), name="update_note"),
+    path("note/<int:pk>/delete/", views.NoteDeleteView.as_view(), name="delete_note"),
+    # Tags
+    path("tag/create/", views.TagCreateView.as_view(), name="create_tag"),
     # Login and Registration
     path("accounts/login/", auth_views.LoginView.as_view(), name="login"),
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),

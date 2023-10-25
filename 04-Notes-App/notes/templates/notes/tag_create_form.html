@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Create tag &ndash; Notes App{% endblock title %}
+
+{% block content %}
+    <!-- horizontal line -->
+    <hr>
+
+    <!-- sidebar -->
+    {% include 'partials/_sidebar.html' %}
+
+    <!-- Tag form -->
+    <form method="post">
+        {% csrf_token %}
+        <label for="id_name">Tag name:</label>
+        <input type="text" name="name" id="id_name" required>
+
+        <!-- create/submit -->
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}
