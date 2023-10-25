@@ -31,6 +31,10 @@
                     <li>Created at: {{ note.created_at }}</li>
                     <li>Updated at: {{ note.updated_at }}</li>
                 </ul>
+                 <!-- update note -->
+                <div>
+                    <button><a href="{% url 'update_note' note.id %}">🔃 Update</a></button>
+                </div>
             </div>
         {% empty %}
             <div>
